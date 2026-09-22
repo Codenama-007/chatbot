@@ -9,6 +9,26 @@ export default function page() {
    const [Email, setEmail] = useState("")
    const [Password, setPassword] = useState("")
 
+   const handleLogin = async(e : React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      console.log(Email) 
+      console.log(Password)
+
+      const response = await fetch("api/login" , {
+         "method" : "POST" , 
+         headers : {
+            "Content-type" : "application/json"
+         } , 
+         body : JSON.stringify({
+            Email ,
+            Password
+         })
+      })
+
+      const data = await response.json()
+      console.log(data)
+   }
+
    return (
       <main className="bg-gray-50 px-4 md:px-8">
          <div className="min-h-screen flex flex-col items-center justify-center">
@@ -18,17 +38,21 @@ export default function page() {
                   className="p-6 rounded-lg bg-white border border-slate-300 shadow-xs md:p-8">
                   <h1 className="text-slate-900 text-center text-3xl font-bold">Sign in</h1>
 
-                  <form className="space-y-6 mt-10">
+                  <form className="space-y-6 mt-10" onSubmit = {handleLogin}>
                      <div>
                         <label htmlFor="email"
                            className="mb-2 text-slate-900 font-medium text-sm inline-block">Email</label>
-                        <input type="email" id="email" name="email" placeholder="john@readymadeui.com" required
+                        <input type="email" id="email" name="email" 
+                        value = {Email} onChange = {(e) => {setEmail(e.target.value)}}
+                        placeholder="john@readymadeui.com" required
                            className="px-3 py-2.5 text-sm text-slate-900 rounded-md bg-white w-full outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600" />
                      </div>
                      <div>
                         <label htmlFor="password"
                            className="mb-2 text-slate-900 font-medium text-sm inline-block">Password</label>
-                        <input type="password" id="password" name="password" placeholder="••••••••" required
+                        <input type="password" id="password" name="password" 
+                        value = {Password} onChange = {(e) => {setPassword(e.target.value)}}
+                        placeholder="••••••••" required
                            className="px-3 py-2.5 text-sm text-slate-900 rounded-md bg-white w-full outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600" />
                      </div>
 
