@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
+import connectDB from "@/lib/mongodb";
+
 
 export async function POST(req : Request){
+    await connectDB()
     const {Email , Password} = await req.json()
 
     console.log(Email)
